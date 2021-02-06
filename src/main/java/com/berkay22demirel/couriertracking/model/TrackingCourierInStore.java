@@ -12,6 +12,9 @@ public class TrackingCourierInStore {
     private String storeName;
     private Date trackingDate;
 
+    public TrackingCourierInStore() {
+    }
+
     public TrackingCourierInStore(Long courierId, String storeName, Date trackingDate) {
         this.courierId = courierId;
         this.storeName = storeName;

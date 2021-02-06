@@ -1,6 +1,5 @@
 package com.berkay22demirel.couriertracking.dao.support;
 
-import com.berkay22demirel.couriertracking.model.Store;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.PathResource;
@@ -21,12 +20,13 @@ import java.util.stream.Collectors;
 public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDaoSupport<T, ID> {
 
     private final String path;
+    private final Class<T> classType;
     private final Field idField;
 
     @SuppressWarnings("unchecked")
     public JsonDaoSupport(String documentName) {
         this.path = "src/main/resources/static/" + documentName + ".json";
-        Class<T> classType = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        classType = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         idField = Arrays.stream(classType.getDeclaredFields()).filter(field -> field.getAnnotation(com.berkay22demirel.couriertracking.aop.annotation.ID.class) != null).findFirst().orElse(null);
         Objects.requireNonNull(idField).setAccessible(true);
     }
@@ -95,7 +95,7 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
         ObjectMapper mapper = new ObjectMapper();
         InputStream inputStream = new PathResource(path).getInputStream();
         JavaType type = mapper.getTypeFactory().
-                constructCollectionType(Collection.class, Store.class);
+                constructCollectionType(Collection.class, classType);
         return mapper.readValue(inputStream, type);
     }
 
@@ -108,9 +108,9 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
     @SuppressWarnings("unchecked")
     private void generateId(T entity) throws IllegalAccessException {
         ID entityId = (ID) idField.get(entity);
-        if (entityId instanceof Long) {
+        if (entityId == null && idField.getType().equals(Long.class)) {
             idField.set(entity, ThreadLocalRandom.current().nextLong(1000000));
-        } else if (entityId instanceof String) {
+        } else if (entityId == null && idField.getType().equals(String.class)) {
             idField.set(entity, UUID.randomUUID().toString());
         }
     }

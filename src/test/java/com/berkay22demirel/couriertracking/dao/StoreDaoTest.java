@@ -53,10 +53,10 @@ public class StoreDaoTest {
         store.setLng(2);
 
         storeDao.update(store);
-        Store insertedStore = storeDao.get("berkay mağaza");
+        Store updatedStore = storeDao.get("berkay mağaza");
 
-        Assert.assertEquals(store.getLat(), insertedStore.getLat(), 0.001);
-        Assert.assertEquals(store.getLng(), insertedStore.getLng(), 0.001);
+        Assert.assertEquals(store.getLat(), updatedStore.getLat(), 0.001);
+        Assert.assertEquals(store.getLng(), updatedStore.getLng(), 0.001);
     }
 
     @Test
