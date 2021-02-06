@@ -2,10 +2,13 @@ package com.berkay22demirel.couriertracking.model;
 
 import com.berkay22demirel.couriertracking.aop.annotation.ID;
 
+import javax.validation.constraints.NotNull;
+
 public class CourierGeolocation {
 
     @ID
     private Long id;
+    @NotNull(message = "courierId cannot be null")
     private Long courierId;
     private double lat;
     private double lng;

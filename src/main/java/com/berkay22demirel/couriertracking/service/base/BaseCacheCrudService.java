@@ -12,7 +12,7 @@ public abstract class BaseCacheCrudService<K extends Serializable, V> implements
 
     private ICacheService<K, V> cacheService;
     private IDaoSupport<V, K> dao;
-    
+
     public BaseCacheCrudService(ICacheService<K, V> cacheService, IDaoSupport<V, K> dao) {
         this.cacheService = cacheService;
         this.dao = dao;
@@ -43,13 +43,13 @@ public abstract class BaseCacheCrudService<K extends Serializable, V> implements
 
     @Loggable
     @Override
-    public V get(K key) {
+    public V get(K key) throws IOException {
         return cacheService.findByKey(key);
     }
 
     @Loggable
     @Override
-    public Collection<V> getAll() {
+    public Collection<V> getAll() throws IOException {
         return cacheService.getAll();
     }
 }

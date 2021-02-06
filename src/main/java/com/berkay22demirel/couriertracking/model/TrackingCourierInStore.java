@@ -2,14 +2,19 @@ package com.berkay22demirel.couriertracking.model;
 
 import com.berkay22demirel.couriertracking.aop.annotation.ID;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class TrackingCourierInStore {
 
     @ID
     private Long id;
+    @NotNull(message = "courierId cannot be null")
     private Long courierId;
+    @NotEmpty(message = "storeName cannot be empty")
     private String storeName;
+    @NotNull(message = "trackingDate cannot be null")
     private Date trackingDate;
 
     public TrackingCourierInStore() {

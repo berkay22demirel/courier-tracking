@@ -11,7 +11,7 @@ public interface IBaseCacheCrudService<K, V> {
 
     public int delete(K id) throws IOException;
 
-    public V get(K id);
+    public V get(K id) throws IOException;
 
-    public Collection<V> getAll();
+    public Collection<V> getAll() throws IOException;
 }
