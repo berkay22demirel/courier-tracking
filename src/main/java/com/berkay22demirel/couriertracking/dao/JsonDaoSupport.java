@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class JsonDaoSupport<T, ID extends Serializable> implements IJsonDaoSupport<T, ID> {
+public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDaoSupport<T, ID> {
 
     private final String path;
     private final Field idField;
@@ -56,13 +56,12 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IJso
 
     @SuppressWarnings("unchecked")
     @Override
-    public int delete(T entity) throws IOException {
+    public int delete(ID id) throws IOException {
         Collection<T> currentData = read();
         Collection<T> deleteData = currentData.stream().filter(data -> {
             try {
                 ID dataId = (ID) idField.get(data);
-                ID deleteId = (ID) idField.get(entity);
-                return !dataId.equals(deleteId);
+                return !dataId.equals(id);
             } catch (IllegalAccessException e) {
                 return true;
             }

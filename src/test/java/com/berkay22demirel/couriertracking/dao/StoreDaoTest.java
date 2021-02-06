@@ -60,10 +60,8 @@ public class StoreDaoTest {
 
     @Test
     public void d_delete() throws IOException {
-        Store store = new Store();
-        store.setName("berkay mağaza");
 
-        int deletedRowCount = storeDao.delete(store);
+        int deletedRowCount = storeDao.delete("berkay mağaza");
 
         Assert.assertEquals(1, deletedRowCount);
     }
