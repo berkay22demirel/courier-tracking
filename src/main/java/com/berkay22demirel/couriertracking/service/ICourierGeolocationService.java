@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface ICourierGeolocationService {
 
-    List<CourierGeolocation> getAllByCourierId(Long courierId);
+    void notify(CourierGeolocation courierGeolocation);
 
     Double getTotalTravelDistance(Long courierId);
+
+    List<CourierGeolocation> getAllByCourierId(Long courierId);
 
 }

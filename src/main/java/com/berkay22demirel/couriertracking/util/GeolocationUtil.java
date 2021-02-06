@@ -2,9 +2,21 @@ package com.berkay22demirel.couriertracking.util;
 
 public class GeolocationUtil {
 
+    private static GeolocationUtil instance;
+
+    private GeolocationUtil() {
+    }
+
+    public static synchronized GeolocationUtil getInstance() {
+        if (instance == null) {
+            instance = new GeolocationUtil();
+        }
+        return instance;
+    }
+
     public final static double AVERAGE_RADIUS_OF_EARTH = 6371;
 
-    public static int calculateDistance(double startLat, double startLng, double endLat, double endLng) {
+    public int calculateDistance(double startLat, double startLng, double endLat, double endLng) {
 
         double latDistance = Math.toRadians(startLat - endLat);
         double lngDistance = Math.toRadians(startLng - endLng);

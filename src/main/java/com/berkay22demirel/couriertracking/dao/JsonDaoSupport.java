@@ -14,6 +14,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDaoSupport<T, ID> {
@@ -32,6 +34,7 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
     @SuppressWarnings("unchecked")
     @Override
     public ID persist(T entity) throws IOException, IllegalAccessException {
+        generateId(entity);
         Collection<T> insertData = read();
         insertData.add(entity);
         write(insertData);
@@ -100,6 +103,16 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
         ObjectMapper mapper = new ObjectMapper();
         FileWriter fileWriter = new FileWriter(path);
         mapper.writeValue(fileWriter, data);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void generateId(T entity) throws IllegalAccessException {
+        ID entityId = (ID) idField.get(entity);
+        if (entityId instanceof Long) {
+            idField.set(entity, ThreadLocalRandom.current().nextLong(1000000));
+        } else if (entityId instanceof String) {
+            idField.set(entity, UUID.randomUUID().toString());
+        }
     }
 
 }

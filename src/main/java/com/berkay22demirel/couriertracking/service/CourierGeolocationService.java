@@ -17,20 +17,17 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
 
     @Autowired
     private ICourierGeolocationDao courierGeolocationDao;
+    @Autowired
+    private ICourierTraceService courierTraceService;
 
     public CourierGeolocationService(IDaoSupport<CourierGeolocation, Long> dao) {
         super(dao);
     }
 
     @Override
-    public List<CourierGeolocation> getAllByCourierId(Long courierId) {
-        try {
-            return courierGeolocationDao.findAll().stream()
-                    .filter(courierGeolocation -> courierGeolocation.getCourierId().equals(courierId))
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            return null;
-        }
+    public void notify(CourierGeolocation courierGeolocation) {
+        super.add(courierGeolocation);
+        courierTraceService.trace(courierGeolocation);
     }
 
     @Override
@@ -43,12 +40,23 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
             CourierGeolocation startCourierGeolocation = courierGeolocationIterator.next();
             while (startCourierGeolocation != null && courierGeolocationIterator.hasNext()) {
                 CourierGeolocation endCourierGeolocation = courierGeolocationIterator.next();
-                double distance = GeolocationUtil.calculateDistance(startCourierGeolocation.getLat(), startCourierGeolocation.getLng(), endCourierGeolocation.getLat(), endCourierGeolocation.getLng());
+                double distance = GeolocationUtil.getInstance().calculateDistance(startCourierGeolocation.getLat(), startCourierGeolocation.getLng(), endCourierGeolocation.getLat(), endCourierGeolocation.getLng());
                 totalDistance += distance;
             }
             return totalDistance;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<CourierGeolocation> getAllByCourierId(Long courierId) {
+        try {
+            return courierGeolocationDao.findAll().stream()
+                    .filter(courierGeolocation -> courierGeolocation.getCourierId().equals(courierId))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
             return null;
         }
     }
