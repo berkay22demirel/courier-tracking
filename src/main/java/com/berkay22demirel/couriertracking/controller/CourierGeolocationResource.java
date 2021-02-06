@@ -26,7 +26,7 @@ public class CourierGeolocationResource {
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
         courierGeolocationCrudService.delete(id);
-        return new ResponseEntity<>("Product is deleted successsfully", HttpStatus.OK);
+        return new ResponseEntity<>("Courier Geolocation is deleted successsfully", HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{id}")
