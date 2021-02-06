@@ -30,4 +30,9 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
             return null;
         }
     }
+
+    @Override
+    public Double getTotalTravelDistance(Long courierId) {
+        return null;
+    }
 }

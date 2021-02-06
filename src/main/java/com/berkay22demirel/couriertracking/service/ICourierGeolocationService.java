@@ -8,5 +8,6 @@ public interface ICourierGeolocationService {
 
     List<CourierGeolocation> getAllByCourierId(Long courierId);
 
+    Double getTotalTravelDistance(Long courierId);
 
 }

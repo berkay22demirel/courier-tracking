@@ -23,6 +23,11 @@ public class CourierGeolocationResource {
         return new ResponseEntity<>("notified successfully", HttpStatus.OK);
     }
 
+    @GetMapping(value = "/total-travel-distance/{courier-id}")
+    public ResponseEntity<Object> getTotalTravelDistance(@PathVariable("courier-id") Long courierId) {
+        return new ResponseEntity<>(courierGeolocationService.getAllByCourierId(courierId), HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
         courierGeolocationCrudService.delete(id);
@@ -36,6 +41,6 @@ public class CourierGeolocationResource {
 
     @GetMapping(value = "/get-all-by-courier-id/{courier-id}")
     public ResponseEntity<Object> getAllByCourierId(@PathVariable("courier-id") Long courierId) {
-        return new ResponseEntity<>(courierGeolocationService.getAllByCourierId(courierId), HttpStatus.OK);
+        return new ResponseEntity<>(courierGeolocationService.getTotalTravelDistance(courierId), HttpStatus.OK);
     }
 }
