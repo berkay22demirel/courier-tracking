@@ -1,7 +1,10 @@
 package com.berkay22demirel.couriertracking.model;
 
+import com.berkay22demirel.couriertracking.aop.annotation.ID;
+
 public class Store {
 
+    @ID
     private String name;
     private double lat;
     private double lng;
