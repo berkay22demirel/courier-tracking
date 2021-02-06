@@ -16,30 +16,50 @@ public class CourierController {
 
     @PostMapping(value = "/create")
     public ResponseEntity<Object> create(@RequestBody Courier courier) {
-        courierCacheCrudService.add(courier);
-        return new ResponseEntity<>("Courier is created successfully", HttpStatus.CREATED);
+        try {
+            courierCacheCrudService.add(courier);
+            return new ResponseEntity<>("Courier is created successfully.", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
+        }
     }
 
     @PutMapping(value = "/update")
     public ResponseEntity<Object> update(@RequestBody Courier courier) {
-        courierCacheCrudService.update(courier);
-        return new ResponseEntity<>("Courier is updated successsfully", HttpStatus.OK);
+        try {
+            courierCacheCrudService.update(courier);
+            return new ResponseEntity<>("Courier is updated successsfully.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
+        }
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
-        courierCacheCrudService.delete(id);
-        return new ResponseEntity<>("Courier is deleted successsfully", HttpStatus.OK);
+        try {
+            courierCacheCrudService.delete(id);
+            return new ResponseEntity<>("Courier is deleted successsfully.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
+        }
     }
 
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<Object> get(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(courierCacheCrudService.get(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(courierCacheCrudService.get(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
+        }
     }
 
     @GetMapping(value = "/get-all")
     public ResponseEntity<Object> get() {
-        return new ResponseEntity<>(courierCacheCrudService.getAll(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(courierCacheCrudService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
+        }
     }
 
 }
