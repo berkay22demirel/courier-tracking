@@ -1,8 +1,8 @@
 package com.berkay22demirel.couriertracking.controller;
 
 import com.berkay22demirel.couriertracking.model.CourierGeolocation;
-import com.berkay22demirel.couriertracking.service.IBaseCrudService;
 import com.berkay22demirel.couriertracking.service.ICourierGeolocationService;
+import com.berkay22demirel.couriertracking.service.base.IBaseCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

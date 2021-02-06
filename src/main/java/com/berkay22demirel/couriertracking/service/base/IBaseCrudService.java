@@ -1,4 +1,4 @@
-package com.berkay22demirel.couriertracking.service;
+package com.berkay22demirel.couriertracking.service.base;
 
 import java.util.Collection;
 

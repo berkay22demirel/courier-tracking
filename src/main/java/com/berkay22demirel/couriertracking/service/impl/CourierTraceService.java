@@ -4,8 +4,8 @@ import com.berkay22demirel.couriertracking.dao.impl.TrackingCourierInStoreDao;
 import com.berkay22demirel.couriertracking.model.CourierGeolocation;
 import com.berkay22demirel.couriertracking.model.Store;
 import com.berkay22demirel.couriertracking.model.TrackingCourierInStore;
-import com.berkay22demirel.couriertracking.service.IBaseCrudService;
 import com.berkay22demirel.couriertracking.service.ICourierTraceService;
+import com.berkay22demirel.couriertracking.service.base.IBaseCacheCrudService;
 import com.berkay22demirel.couriertracking.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,12 @@ public class CourierTraceService implements ICourierTraceService {
     @Autowired
     private TrackingCourierInStoreDao trackingCourierInStoreDao;
     @Autowired
-    private IBaseCrudService<Store, String> storeCrudService;
+    private IBaseCacheCrudService<String, Store> storeCacheCrudService;
 
     @Override
     public void trace(CourierGeolocation courierGeolocation) throws Exception {
         try {
-            storeCrudService.getAll().forEach(store -> {
+            storeCacheCrudService.getAll().forEach(store -> {
                 try {
                     TrackingCourierInStore lastTackingCourierInStoreByStoreName = trackingCourierInStoreDao.findAll().stream().filter(trackingCourierInStore -> trackingCourierInStore.getStoreName().equals(store.getName())).reduce((first, second) -> second)
                             .orElse(null);
