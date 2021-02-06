@@ -1,5 +1,7 @@
-package com.berkay22demirel.couriertracking.dao;
+package com.berkay22demirel.couriertracking.dao.impl;
 
+import com.berkay22demirel.couriertracking.dao.ICourierDao;
+import com.berkay22demirel.couriertracking.dao.support.JsonDaoSupport;
 import com.berkay22demirel.couriertracking.model.Courier;
 import org.springframework.stereotype.Repository;
 

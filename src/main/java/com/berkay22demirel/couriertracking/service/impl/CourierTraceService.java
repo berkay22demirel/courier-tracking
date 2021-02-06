@@ -1,9 +1,11 @@
-package com.berkay22demirel.couriertracking.service;
+package com.berkay22demirel.couriertracking.service.impl;
 
-import com.berkay22demirel.couriertracking.dao.TrackingCourierInStoreDao;
+import com.berkay22demirel.couriertracking.dao.impl.TrackingCourierInStoreDao;
 import com.berkay22demirel.couriertracking.model.CourierGeolocation;
 import com.berkay22demirel.couriertracking.model.Store;
 import com.berkay22demirel.couriertracking.model.TrackingCourierInStore;
+import com.berkay22demirel.couriertracking.service.IBaseCrudService;
+import com.berkay22demirel.couriertracking.service.ICourierTraceService;
 import com.berkay22demirel.couriertracking.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

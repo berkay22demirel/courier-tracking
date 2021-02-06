@@ -1,4 +1,4 @@
-package com.berkay22demirel.couriertracking.dao;
+package com.berkay22demirel.couriertracking.dao.support;
 
 import com.berkay22demirel.couriertracking.model.Store;
 import com.fasterxml.jackson.databind.JavaType;
@@ -24,7 +24,7 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
     private final Field idField;
 
     @SuppressWarnings("unchecked")
-    JsonDaoSupport(String documentName) {
+    public JsonDaoSupport(String documentName) {
         this.path = "src/main/resources/static/" + documentName + ".json";
         Class<T> classType = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         idField = Arrays.stream(classType.getDeclaredFields()).filter(field -> field.getAnnotation(com.berkay22demirel.couriertracking.aop.annotation.ID.class) != null).findFirst().orElse(null);

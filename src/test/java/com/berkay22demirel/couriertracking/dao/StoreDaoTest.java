@@ -1,6 +1,7 @@
 package com.berkay22demirel.couriertracking.dao;
 
 import com.berkay22demirel.couriertracking.CourierTrackingApplication;
+import com.berkay22demirel.couriertracking.dao.impl.StoreDao;
 import com.berkay22demirel.couriertracking.model.Store;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;

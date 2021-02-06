@@ -1,6 +1,7 @@
-package com.berkay22demirel.couriertracking.service;
+package com.berkay22demirel.couriertracking.service.base;
 
-import com.berkay22demirel.couriertracking.dao.IDaoSupport;
+import com.berkay22demirel.couriertracking.dao.support.IDaoSupport;
+import com.berkay22demirel.couriertracking.service.IBaseCrudService;
 
 import java.io.IOException;
 import java.io.Serializable;

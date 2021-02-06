@@ -1,4 +1,4 @@
-package com.berkay22demirel.couriertracking.dao;
+package com.berkay22demirel.couriertracking.dao.support;
 
 import java.io.IOException;
 import java.io.Serializable;
