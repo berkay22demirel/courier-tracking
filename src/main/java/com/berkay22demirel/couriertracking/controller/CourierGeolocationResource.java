@@ -19,7 +19,7 @@ public class CourierGeolocationResource {
     private IBaseCrudService<CourierGeolocation, Long> courierGeolocationCrudService;
 
     @GetMapping(value = "/notify")
-    public ResponseEntity<Object> notifyGeolocation() {
+    public ResponseEntity<Object> notifyGeolocation(@RequestBody CourierGeolocation courierGeolocation) {
         return new ResponseEntity<>("notified successfully", HttpStatus.OK);
     }
 
