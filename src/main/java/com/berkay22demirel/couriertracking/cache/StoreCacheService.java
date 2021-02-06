@@ -1,5 +1,6 @@
 package com.berkay22demirel.couriertracking.cache;
 
+import com.berkay22demirel.couriertracking.aop.annotation.Loggable;
 import com.berkay22demirel.couriertracking.cache.base.CacheService;
 import com.berkay22demirel.couriertracking.cache.base.ICacheService;
 import com.berkay22demirel.couriertracking.dao.support.IDaoSupport;
@@ -24,6 +25,7 @@ public class StoreCacheService extends CacheService<String, Store> implements IC
         invalidate();
     }
 
+    @Loggable
     @Override
     public void invalidate() throws IOException {
         stores = storeDao.findAll().stream().collect(Collectors.toMap(Store::getName, store -> store));

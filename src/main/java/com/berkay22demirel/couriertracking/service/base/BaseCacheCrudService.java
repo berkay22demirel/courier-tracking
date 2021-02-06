@@ -1,5 +1,6 @@
 package com.berkay22demirel.couriertracking.service.base;
 
+import com.berkay22demirel.couriertracking.aop.annotation.Loggable;
 import com.berkay22demirel.couriertracking.cache.base.ICacheService;
 import com.berkay22demirel.couriertracking.dao.support.IDaoSupport;
 
@@ -11,59 +12,44 @@ public abstract class BaseCacheCrudService<K extends Serializable, V> implements
 
     private ICacheService<K, V> cacheService;
     private IDaoSupport<V, K> dao;
-
+    
     public BaseCacheCrudService(ICacheService<K, V> cacheService, IDaoSupport<V, K> dao) {
         this.cacheService = cacheService;
         this.dao = dao;
     }
 
+    @Loggable
     @Override
-    public K add(V value) {
-        try {
-            K key = dao.persist(value);
-            cacheService.invalidate();
-            return key;
-        } catch (Exception e) {
-            return null;
-        }
+    public K add(V value) throws IOException, IllegalAccessException {
+        K key = dao.persist(value);
+        cacheService.invalidate();
+        return key;
     }
 
+    @Loggable
     @Override
-    public void update(V value) {
-        try {
-            dao.update(value);
-            cacheService.invalidate();
-        } catch (Exception e) {
-
-        }
+    public void update(V value) throws IOException {
+        dao.update(value);
+        cacheService.invalidate();
     }
 
+    @Loggable
     @Override
-    public int delete(K key) {
-        try {
-            int deletedRowCount = dao.delete(key);
-            cacheService.invalidate();
-            return deletedRowCount;
-        } catch (IOException e) {
-            return 0;
-        }
+    public int delete(K key) throws IOException {
+        int deletedRowCount = dao.delete(key);
+        cacheService.invalidate();
+        return deletedRowCount;
     }
 
+    @Loggable
     @Override
     public V get(K key) {
-        try {
-            return cacheService.findByKey(key);
-        } catch (Exception e) {
-            return null;
-        }
+        return cacheService.findByKey(key);
     }
 
+    @Loggable
     @Override
     public Collection<V> getAll() {
-        try {
-            return cacheService.getAll();
-        } catch (Exception e) {
-            return null;
-        }
+        return cacheService.getAll();
     }
 }

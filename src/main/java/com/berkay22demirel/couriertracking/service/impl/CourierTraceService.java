@@ -1,5 +1,6 @@
 package com.berkay22demirel.couriertracking.service.impl;
 
+import com.berkay22demirel.couriertracking.aop.annotation.Loggable;
 import com.berkay22demirel.couriertracking.dao.impl.TrackingCourierInStoreDao;
 import com.berkay22demirel.couriertracking.model.CourierGeolocation;
 import com.berkay22demirel.couriertracking.model.Store;
@@ -23,24 +24,21 @@ public class CourierTraceService implements ICourierTraceService {
     @Autowired
     private IBaseCacheCrudService<String, Store> storeCacheCrudService;
 
+    @Loggable
     @Override
     public void trace(CourierGeolocation courierGeolocation) throws Exception {
-        try {
-            storeCacheCrudService.getAll().forEach(store -> {
-                try {
-                    TrackingCourierInStore lastTackingCourierInStoreByStoreName = trackingCourierInStoreDao.findAll().stream().filter(trackingCourierInStore -> trackingCourierInStore.getStoreName().equals(store.getName())).reduce((first, second) -> second)
-                            .orElse(null);
-                    if (lastTackingCourierInStoreByStoreName == null || isNotIgnoredByTracking(lastTackingCourierInStoreByStoreName.getTrackingDate())) {
-                        TrackingCourierInStore trackingCourierInStore = new TrackingCourierInStore(courierGeolocation.getCourierId(), store.getName(), new Date());
-                        trackingCourierInStoreDao.persist(trackingCourierInStore);
-                    }
-                } catch (IOException | IllegalAccessException e) {
-                    e.printStackTrace();
+        storeCacheCrudService.getAll().forEach(store -> {
+            try {
+                TrackingCourierInStore lastTackingCourierInStoreByStoreName = trackingCourierInStoreDao.findAll().stream().filter(trackingCourierInStore -> trackingCourierInStore.getStoreName().equals(store.getName())).reduce((first, second) -> second)
+                        .orElse(null);
+                if (lastTackingCourierInStoreByStoreName == null || isNotIgnoredByTracking(lastTackingCourierInStoreByStoreName.getTrackingDate())) {
+                    TrackingCourierInStore trackingCourierInStore = new TrackingCourierInStore(courierGeolocation.getCourierId(), store.getName(), new Date());
+                    trackingCourierInStoreDao.persist(trackingCourierInStore);
                 }
-            });
-        } catch (Exception e) {
-            throw e;
-        }
+            } catch (IOException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private boolean isNotIgnoredByTracking(Date lastLogDate) {

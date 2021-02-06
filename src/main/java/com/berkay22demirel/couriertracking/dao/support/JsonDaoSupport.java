@@ -2,6 +2,8 @@ package com.berkay22demirel.couriertracking.dao.support;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.PathResource;
 
 import java.io.FileWriter;
@@ -22,6 +24,9 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
     private final String path;
     private final Class<T> classType;
     private final Field idField;
+
+    private Logger logger = LogManager.getLogger(JsonDaoSupport.class);
+
 
     @SuppressWarnings("unchecked")
     public JsonDaoSupport(String documentName) {
@@ -51,6 +56,7 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
                 if (dataId.equals(updateId)) return entity;
                 return data;
             } catch (IllegalAccessException e) {
+                logger.error("threw an unexpected error in com.berkay22demirel.couriertracking.dao.support.JsonDaoSupport.update", e);
                 return data;
             }
         }).collect(Collectors.toList());
@@ -66,6 +72,7 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
                 ID dataId = (ID) idField.get(data);
                 return !dataId.equals(id);
             } catch (IllegalAccessException e) {
+                logger.error("threw an unexpected error in com.berkay22demirel.couriertracking.dao.support.JsonDaoSupport.delete", e);
                 return true;
             }
         }).collect(Collectors.toList());
@@ -81,6 +88,7 @@ public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDao
                 ID dataId = (ID) idField.get(data);
                 return dataId.equals(id);
             } catch (IllegalAccessException e) {
+                logger.error("threw an unexpected error in com.berkay22demirel.couriertracking.dao.support.JsonDaoSupport.get", e);
                 return false;
             }
         }).findFirst().orElse(null);

@@ -1,5 +1,6 @@
 package com.berkay22demirel.couriertracking.cache;
 
+import com.berkay22demirel.couriertracking.aop.annotation.Loggable;
 import com.berkay22demirel.couriertracking.cache.base.CacheService;
 import com.berkay22demirel.couriertracking.cache.base.ICacheService;
 import com.berkay22demirel.couriertracking.dao.support.IDaoSupport;
@@ -24,6 +25,7 @@ public class CourierCacheService extends CacheService<Long, Courier> implements 
         invalidate();
     }
 
+    @Loggable
     @Override
     public void invalidate() throws IOException {
         couriers = courierDao.findAll().stream().collect(Collectors.toMap(Courier::getId, courier -> courier));
