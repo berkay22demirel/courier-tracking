@@ -4,5 +4,5 @@ import com.berkay22demirel.couriertracking.model.CourierGeolocation;
 
 public interface ICourierTraceService {
 
-    void trace(CourierGeolocation courierGeolocation);
+    void trace(CourierGeolocation courierGeolocation) throws Exception;
 }

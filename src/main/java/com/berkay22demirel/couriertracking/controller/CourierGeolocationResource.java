@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "/courier-geolocation")
 public class CourierGeolocationResource {
@@ -25,7 +27,12 @@ public class CourierGeolocationResource {
 
     @GetMapping(value = "/total-travel-distance/{courier-id}")
     public ResponseEntity<Object> getTotalTravelDistance(@PathVariable("courier-id") Long courierId) {
-        return new ResponseEntity<>(courierGeolocationService.getAllByCourierId(courierId), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(courierGeolocationService.getAllByCourierId(courierId), HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -41,6 +48,11 @@ public class CourierGeolocationResource {
 
     @GetMapping(value = "/get-all-by-courier-id/{courier-id}")
     public ResponseEntity<Object> getAllByCourierId(@PathVariable("courier-id") Long courierId) {
-        return new ResponseEntity<>(courierGeolocationService.getTotalTravelDistance(courierId), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(courierGeolocationService.getTotalTravelDistance(courierId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

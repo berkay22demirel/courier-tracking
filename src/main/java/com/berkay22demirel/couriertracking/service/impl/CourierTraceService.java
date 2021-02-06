@@ -24,7 +24,7 @@ public class CourierTraceService implements ICourierTraceService {
     private IBaseCrudService<Store, String> storeCrudService;
 
     @Override
-    public void trace(CourierGeolocation courierGeolocation) {
+    public void trace(CourierGeolocation courierGeolocation) throws Exception {
         try {
             storeCrudService.getAll().forEach(store -> {
                 try {
@@ -39,7 +39,7 @@ public class CourierTraceService implements ICourierTraceService {
                 }
             });
         } catch (Exception e) {
-
+            throw e;
         }
     }
 

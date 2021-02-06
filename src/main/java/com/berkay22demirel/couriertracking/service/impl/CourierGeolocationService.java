@@ -8,6 +8,8 @@ import com.berkay22demirel.couriertracking.service.ICourierGeolocationService;
 import com.berkay22demirel.couriertracking.service.ICourierTraceService;
 import com.berkay22demirel.couriertracking.service.base.BaseCrudService;
 import com.berkay22demirel.couriertracking.util.GeolocationUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +26,25 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
     @Autowired
     private ICourierTraceService courierTraceService;
 
+    Logger logger = LogManager.getLogger(CourierGeolocationService.class);
+
     public CourierGeolocationService(IDaoSupport<CourierGeolocation, Long> dao) {
         super(dao);
     }
 
     @Override
-    public void notify(CourierGeolocation courierGeolocation) {
-        super.add(courierGeolocation);
-        courierTraceService.trace(courierGeolocation);
+    public void notify(CourierGeolocation courierGeolocation) throws Exception {
+        try {
+            super.add(courierGeolocation);
+            courierTraceService.trace(courierGeolocation);
+        } catch (Exception e) {
+            logger.error("threw an unexpected error in com.berkay22demirel.couriertracking.service.impl.CourierGeolocationService.notify", e);
+            throw e;
+        }
     }
 
     @Override
-    public Double getTotalTravelDistance(Long courierId) {
+    public Double getTotalTravelDistance(Long courierId) throws Exception {
         try {
             Iterator<CourierGeolocation> courierGeolocationIterator = courierGeolocationDao.findAll().stream()
                     .filter(courierGeolocation -> courierGeolocation.getCourierId().equals(courierId))
@@ -48,20 +57,21 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
                 totalDistance += distance;
             }
             return totalDistance;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        } catch (Exception e) {
+            logger.error("threw an unexpected error in com.berkay22demirel.couriertracking.service.impl.CourierGeolocationService.getTotalTravelDistance", e);
+            throw e;
         }
     }
 
     @Override
-    public List<CourierGeolocation> getAllByCourierId(Long courierId) {
+    public List<CourierGeolocation> getAllByCourierId(Long courierId) throws IOException {
         try {
             return courierGeolocationDao.findAll().stream()
                     .filter(courierGeolocation -> courierGeolocation.getCourierId().equals(courierId))
                     .collect(Collectors.toList());
-        } catch (IOException e) {
-            return null;
+        } catch (Exception e) {
+            logger.error("threw an unexpected error in com.berkay22demirel.couriertracking.service.impl.CourierGeolocationService.getAllByCourierId", e);
+            throw e;
         }
     }
 }
