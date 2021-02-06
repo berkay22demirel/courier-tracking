@@ -3,10 +3,12 @@ package com.berkay22demirel.couriertracking.service;
 import com.berkay22demirel.couriertracking.dao.ICourierGeolocationDao;
 import com.berkay22demirel.couriertracking.dao.IDaoSupport;
 import com.berkay22demirel.couriertracking.model.CourierGeolocation;
+import com.berkay22demirel.couriertracking.util.GeolocationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,21 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
 
     @Override
     public Double getTotalTravelDistance(Long courierId) {
-        return null;
+        try {
+            Iterator<CourierGeolocation> courierGeolocationIterator = courierGeolocationDao.findAll().stream()
+                    .filter(courierGeolocation -> courierGeolocation.getCourierId().equals(courierId))
+                    .iterator();
+            double totalDistance = 0.0;
+            CourierGeolocation startCourierGeolocation = courierGeolocationIterator.next();
+            while (startCourierGeolocation != null && courierGeolocationIterator.hasNext()) {
+                CourierGeolocation endCourierGeolocation = courierGeolocationIterator.next();
+                double distance = GeolocationUtil.calculateDistance(startCourierGeolocation.getLat(), startCourierGeolocation.getLng(), endCourierGeolocation.getLat(), endCourierGeolocation.getLng());
+                totalDistance += distance;
+            }
+            return totalDistance;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
