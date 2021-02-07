@@ -9,7 +9,7 @@ public interface ICourierGeolocationService {
 
     void notify(CourierGeolocation courierGeolocation) throws Exception;
 
-    Double getTotalTravelDistance(Long courierId) throws Exception;
+    double getTotalTravelDistance(Long courierId) throws Exception;
 
     List<CourierGeolocation> getAllByCourierId(Long courierId) throws IOException;
 

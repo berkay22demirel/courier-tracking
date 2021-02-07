@@ -24,7 +24,7 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
     private ICourierGeolocationDao courierGeolocationDao;
     @Autowired
     private ICourierTraceService courierTraceService;
-    
+
     public CourierGeolocationService(IDaoSupport<CourierGeolocation, Long> dao) {
         super(dao);
     }
@@ -38,12 +38,12 @@ public class CourierGeolocationService extends BaseCrudService<CourierGeolocatio
 
     @Loggable
     @Override
-    public Double getTotalTravelDistance(Long courierId) throws Exception {
+    public double getTotalTravelDistance(Long courierId) throws Exception {
         Iterator<CourierGeolocation> courierGeolocationIterator = courierGeolocationDao.findAll().stream()
                 .filter(courierGeolocation -> courierGeolocation.getCourierId().equals(courierId))
                 .iterator();
         double totalDistance = 0.0;
-        CourierGeolocation startCourierGeolocation = courierGeolocationIterator.next();
+        CourierGeolocation startCourierGeolocation = courierGeolocationIterator.hasNext() ? courierGeolocationIterator.next() : null;
         while (startCourierGeolocation != null && courierGeolocationIterator.hasNext()) {
             CourierGeolocation endCourierGeolocation = courierGeolocationIterator.next();
             double distance = GeolocationUtil.getInstance().calculateDistance(startCourierGeolocation.getLat(), startCourierGeolocation.getLng(), endCourierGeolocation.getLat(), endCourierGeolocation.getLng());
