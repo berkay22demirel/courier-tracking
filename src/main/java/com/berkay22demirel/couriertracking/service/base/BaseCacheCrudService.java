@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
+/**
+ * This abstract class added to provide abilities standard CRUD to its subclasses for cache.
+ *
+ * @param <K> Key class type
+ * @param <V> Value class type
+ */
 public abstract class BaseCacheCrudService<K extends Serializable, V> implements IBaseCacheCrudService<K, V> {
 
     private ICacheService<K, V> cacheService;

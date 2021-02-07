@@ -7,6 +7,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
+/**
+ * This abstract class added to provide abilities standard CRUD to its subclasses.
+ *
+ * @param <T>  Entity class type
+ * @param <ID> ID class type
+ */
 public abstract class BaseCrudService<T, ID extends Serializable> implements IBaseCrudService<T, ID> {
 
     private IDaoSupport<T, ID> dao;
@@ -38,7 +44,7 @@ public abstract class BaseCrudService<T, ID extends Serializable> implements IBa
     public T get(ID id) throws IOException {
         return dao.get(id);
     }
-    
+
     @Loggable
     @Override
     public Collection<T> getAll() throws IOException {

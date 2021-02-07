@@ -4,6 +4,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
+/**
+ * This interface added to simulate the JPA
+ *
+ * @param <T>  Entity class type
+ * @param <ID> ID class type
+ */
 public interface IDaoSupport<T, ID extends Serializable> {
 
     ID persist(T entity) throws IOException, IllegalAccessException;

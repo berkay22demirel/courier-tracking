@@ -19,6 +19,12 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+/**
+ * This abstract class added to simulate the JPA implementations (like Hibernate etc.)
+ *
+ * @param <T>  Entity class type
+ * @param <ID> ID class type
+ */
 public abstract class JsonDaoSupport<T, ID extends Serializable> implements IDaoSupport<T, ID> {
 
     private final String path;
