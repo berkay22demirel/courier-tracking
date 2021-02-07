@@ -36,7 +36,7 @@ public class CourierController {
         try {
             courier.setId(id);
             courierCacheCrudService.update(courier);
-            return new ResponseEntity<>("Courier is updated successsfully.", HttpStatus.OK);
+            return new ResponseEntity<>("Courier is updated successfully.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
         }
@@ -62,7 +62,7 @@ public class CourierController {
     }
 
     @GetMapping(value = "/get-all")
-    public ResponseEntity<Object> get() {
+    public ResponseEntity<Object> getAll() {
         try {
             return new ResponseEntity<>(courierCacheCrudService.getAll(), HttpStatus.OK);
         } catch (Exception e) {

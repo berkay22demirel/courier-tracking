@@ -10,8 +10,10 @@ public class CourierGeolocation {
     private Long id;
     @NotNull(message = "courierId cannot be null")
     private Long courierId;
-    private double lat;
-    private double lng;
+    @NotNull(message = "lat cannot be null")
+    private Double lat;
+    @NotNull(message = "lng cannot be null")
+    private Double lng;
 
     public Long getId() {
         return id;
@@ -29,19 +31,19 @@ public class CourierGeolocation {
         this.courierId = courierId;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(double lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 }

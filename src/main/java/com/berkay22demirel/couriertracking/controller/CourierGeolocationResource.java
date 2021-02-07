@@ -38,7 +38,7 @@ public class CourierGeolocationResource {
     @GetMapping(value = "/total-travel-distance/{courier-id}")
     public ResponseEntity<Object> getTotalTravelDistance(@PathVariable("courier-id") @NotNull(message = "courierId cannot be null") Long courierId) {
         try {
-            return new ResponseEntity<>(courierGeolocationService.getAllByCourierId(courierId), HttpStatus.OK);
+            return new ResponseEntity<>(courierGeolocationService.getTotalTravelDistance(courierId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("An unexpected error has occurred.", HttpStatus.OK);
         }
